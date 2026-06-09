@@ -1,32 +1,35 @@
 name: Deploy Pages
 
+# Pages is served branch-style from `gh-pages` (auto-enabled by the first
+# gh-pages push on 2026-06-09 — no admin click was needed). The workflow
+# token can't enable/use the Actions-based Pages deploy on this repo
+# ("Resource not accessible by integration"), but it CAN write branches,
+# so: every push to main mirrors the site content onto gh-pages and the
+# Pages service redeploys it.
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  mirror-to-gh-pages:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Mirror site content to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan gh-pages-tmp
+          git rm -rf --cached . -q
+          git add index.html .nojekyll README.md
+          git commit -m "Pages deploy: mirror main@${GITHUB_SHA::7}"
+          git push origin gh-pages-tmp:gh-pages --force
