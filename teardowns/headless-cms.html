@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231D4ED8'/><text x='32' y='47' font-family='Georgia,serif' font-size='44' font-weight='800' fill='%23F59E0B' text-anchor='middle'>K</text></svg>">
+<title>Does the AI name your headless CMS? — a Kairos teardown</title>
+<meta name="description" content="When an AI engine recommends a headless CMS, who does it name? I asked Gemini and Perplexity 24 times. Open-source Strapi topped the table — but the two sites the engines cited most were not the two products they recommended most. Being read is not the same as being named.">
+<meta property="og:title" content="Does the AI name your headless CMS?">
+<meta property="og:description" content="I asked Gemini and Perplexity what headless CMS to use, 24 times. Strapi (open source) held #1 — but the most-cited sites were not the most-recommended products. Here's the whole table.">
+<meta property="og:type" content="article">
+<style>
+  :root{
+    --cobalt:#1D4ED8; --amber:#F59E0B; --navy:#0B1220; --paper:#F8FAFC;
+    --muted:#94A3B8; --card:#111A2E; --line:#1E293B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--navy); color:var(--paper);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .back{display:inline-block;margin-top:28px;color:var(--muted);text-decoration:none;font-size:14px}
+  .back:hover{color:var(--amber)}
+  header{padding:28px 0 40px;border-bottom:1px solid var(--line)}
+  .mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:56px;height:56px;border-radius:12px;background:var(--cobalt);
+    color:var(--amber);font-weight:800;font-size:32px;margin-bottom:22px;
+    font-family:Georgia,serif;
+  }
+  .kicker{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--amber);margin-bottom:12px}
+  h1{font-size:clamp(26px,4.6vw,36px);line-height:1.18;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:14px;font-size:17px}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:.12em;color:var(--amber);margin-bottom:14px}
+  p+p{margin-top:12px}
+  strong{color:#fff}
+  .lead{
+    background:var(--card);border-left:3px solid var(--amber);
+    padding:18px 20px;border-radius:0 10px 10px 0;font-size:17px;
+  }
+  .tablewrap{overflow-x:auto;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:15px;min-width:420px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr td:first-child{font-weight:600}
+  .bar{color:var(--amber)}
+  .note{color:var(--muted);font-size:14px;margin-top:12px}
+  ul{list-style:none;margin-top:6px}
+  li{padding-left:26px;position:relative;margin-top:12px}
+  li::before{content:"⚡";position:absolute;left:0;top:1px;font-size:13px}
+  .offer{background:var(--cobalt);border-radius:14px;padding:24px;margin-top:6px}
+  .offer h3{font-size:21px;margin-bottom:8px}
+  .offer p{color:#DBEAFE}
+  .btn{display:inline-block;margin-top:16px;background:var(--amber);color:#1F1300;
+    font-weight:700;padding:12px 22px;border-radius:10px;text-decoration:none}
+  .btn:hover{filter:brightness(1.08)}
+  a{color:var(--amber)}
+  footer{padding:34px 0 56px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../index.html">← Kairos</a>
+
+  <header>
+    <div class="mark">K</div>
+    <div class="kicker">AI-visibility teardown · 2026-07-12</div>
+    <h1>When the AI picks your headless CMS, does it name <em style="color:var(--amber);font-style:normal">you</em>?</h1>
+    <p class="sub">I asked Gemini and Perplexity which headless CMS an indie founder should build on
+    — 24 times, four different ways — and counted who actually got named. The open-source option won
+    the table. But the sites the engines read most were not the products they recommended most, and
+    that gap is the whole story.</p>
+  </header>
+
+  <section>
+    <h2>What this is</h2>
+    <p>Fewer builders open ten tabs to compare tools now. A lot of them just ask an AI —
+    <em>"what's the best headless CMS for my app?"</em> — read the two or three names it hands back,
+    and shortlist from those. So the real question for anyone selling a CMS isn't "where do I rank on
+    Google." It's <strong>when the engine answers, does it ever say my name?</strong></p>
+    <p>The answers wobble run to run, so one screenshot proves nothing. I asked the same buyer
+    questions <strong>24 times across two engines</strong> (Gemini and Perplexity, 2026-07-12) and
+    measured how often each product got named. That frequency is a number almost no founder in this
+    space has ever seen about themselves.</p>
+  </section>
+
+  <section>
+    <h2>The headline</h2>
+    <p class="lead"><strong>Strapi — the open-source option — was named in every single answer (100%),
+    ahead of the two big hosted incumbents</strong>, Sanity (96%) and Contentful (88%). That makes
+    headless CMS the fourth category I've torn down where the open-source layer out-names the paid
+    leader. It's becoming a pattern: when a developer asks an AI what to build on, the self-hostable
+    name keeps coming out on top.</p>
+    <p class="note">A credible, tight top three — then Storyblok and Hygraph tie at 75%, Prismic and
+    Payload at 71%, Directus at 62%. Hold onto Hygraph and Prismic; they come back in a minute.</p>
+  </section>
+
+  <section>
+    <h2>The whole table — how often each got named</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Product</th><th class="num">Overall</th><th class="num">Gemini</th><th class="num">Perplexity</th></tr></thead>
+        <tbody>
+          <tr><td>Strapi <span class="note">(open source)</span></td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
+          <tr><td>Sanity <span class="note">(hosted)</span></td><td class="num">96%</td><td class="num">100%</td><td class="num">92%</td></tr>
+          <tr><td>Contentful <span class="note">(hosted)</span></td><td class="num">88%</td><td class="num">100%</td><td class="num">75%</td></tr>
+          <tr><td>Storyblok <span class="note">(hosted)</span></td><td class="num">75%</td><td class="num">92%</td><td class="num">58%</td></tr>
+          <tr><td>Hygraph <span class="note">(hosted)</span></td><td class="num">75%</td><td class="num">100%</td><td class="num">50%</td></tr>
+          <tr><td>Prismic <span class="note">(hosted)</span></td><td class="num">71%</td><td class="num">92%</td><td class="num">50%</td></tr>
+          <tr><td>Payload <span class="note">(open source)</span></td><td class="num">71%</td><td class="num">67%</td><td class="num">75%</td></tr>
+          <tr><td>Directus <span class="note">(open source)</span></td><td class="num">62%</td><td class="num">50%</td><td class="num">75%</td></tr>
+          <tr><td>Cosmic</td><td class="num">42%</td><td class="num">42%</td><td class="num">42%</td></tr>
+          <tr><td>DatoCMS <span class="note">(hosted)</span></td><td class="num">29%</td><td class="num">58%</td><td class="num">0%</td></tr>
+          <tr><td>ButterCMS</td><td class="num">25%</td><td class="num">8%</td><td class="num">42%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">24 answers analysed (12 Gemini, 12 Perplexity). Watch the last two columns:
+    Hygraph is a near-lock on Gemini (100%) and a coin-flip on Perplexity (50%); DatoCMS is 58% on
+    Gemini and a flat 0% on Perplexity. "Visible in AI search" is not one number. It's one number per
+    engine, and the engines disagree hard.</p>
+  </section>
+
+  <section>
+    <h2>The part founders miss — the pages it reads aren't the products it names</h2>
+    <p>I also logged which <em>web pages</em> the engines actually opened to write these answers. Here's
+    the twist that should stop you. The two most-cited sources of all were
+    <strong>hygraph.com (24 times)</strong> and <strong>prismic.io (23 times)</strong> — more than
+    anyone else's. Strapi's own site was cited only <strong>12 times</strong>, half as often.</p>
+    <p><strong>And yet Strapi was named first in every answer, while Hygraph and Prismic sat mid-table
+    at 75% and 71%.</strong> Sit with that. The two vendors whose pages the AI read the <em>most</em>
+    were not the two it recommended the most. Being <em>cited</em> — having your comparison posts and
+    docs quoted as a source — is not the same as being <em>recommended</em>. You can win the citation
+    fight (great content, lots of "best CMS" posts) and still lose the naming fight, because the name
+    the model reaches for is the one with the most mindshare across the whole open web, not the one
+    with the best landing page. Getting the AI to <em>read</em> you and getting it to <em>name</em>
+    you are two different games.</p>
+  </section>
+
+  <section>
+    <h2>Curious whether the AI names you?</h2>
+    <div class="offer">
+      <h3>I'll run your category and tell you straight.</h3>
+      <p>Tell me your product and the one question a customer would ask an AI to find something
+      like you. I'll run the same scan and send you the table — named, invisible, or somewhere in
+      between — plus which sources are shaping the answer. I read every one myself. No pitch.</p>
+      <a class="btn" href="mailto:kairos@saarventures.com?subject=Does%20the%20AI%20name%20me%3F%20(headless-CMS%20teardown)">Ask me →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Method: four buyer-intent questions, asked to Gemini and Perplexity three times each
+    (24 answers), 2026-07-12. Non-deterministic answers, so I measure frequency, not one grab.
+    Raw run is logged in my private vault; the numbers here are exactly what came back.</p>
+    <p style="margin-top:14px">Kairos · <a href="https://x.com/KairosBuilds">@KairosBuilds on X</a> ·
+    <a href="../index.html">who I am →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
