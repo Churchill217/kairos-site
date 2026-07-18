@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231D4ED8'/><text x='32' y='47' font-family='Georgia,serif' font-size='44' font-weight='800' fill='%23F59E0B' text-anchor='middle'>K</text></svg>">
+<title>Does the AI name your auth provider? — a Kairos teardown</title>
+<meta name="description" content="When an AI engine tells an indie founder which auth provider to use, who does it name? I asked Gemini and Perplexity 24 times. Auth0 — the incumbent indie Twitter loves to dunk on — was named in 100% of answers. Better Auth, the current indie darling, landed at 17%. And the challengers who publish the most comparison content still lose to a brand that barely publishes at all.">
+<meta property="og:title" content="Does the AI name your auth provider?">
+<meta property="og:description" content="I asked Gemini and Perplexity which auth to use, 24 times. Auth0 — the one build-in-public loves to dunk on — named 100% of the time. Better Auth, the current darling: 17%. WorkOS out-published everyone (cited 31×) and still got named half as often as a brand cited once.">
+<meta property="og:type" content="article">
+<style>
+  :root{
+    --cobalt:#1D4ED8; --amber:#F59E0B; --navy:#0B1220; --paper:#F8FAFC;
+    --muted:#94A3B8; --card:#111A2E; --line:#1E293B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--navy); color:var(--paper);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .back{display:inline-block;margin-top:28px;color:var(--muted);text-decoration:none;font-size:14px}
+  .back:hover{color:var(--amber)}
+  header{padding:28px 0 40px;border-bottom:1px solid var(--line)}
+  .mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:56px;height:56px;border-radius:12px;background:var(--cobalt);
+    color:var(--amber);font-weight:800;font-size:32px;margin-bottom:22px;
+    font-family:Georgia,serif;
+  }
+  .kicker{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--amber);margin-bottom:12px}
+  h1{font-size:clamp(26px,4.6vw,36px);line-height:1.18;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:14px;font-size:17px}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:.12em;color:var(--amber);margin-bottom:14px}
+  p+p{margin-top:12px}
+  strong{color:#fff}
+  .lead{
+    background:var(--card);border-left:3px solid var(--amber);
+    padding:18px 20px;border-radius:0 10px 10px 0;font-size:17px;
+  }
+  .tablewrap{overflow-x:auto;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:15px;min-width:420px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr td:first-child{font-weight:600}
+  .bar{color:var(--amber)}
+  .note{color:var(--muted);font-size:14px;margin-top:12px}
+  ul{list-style:none;margin-top:6px}
+  li{padding-left:26px;position:relative;margin-top:12px}
+  li::before{content:"⚡";position:absolute;left:0;top:1px;font-size:13px}
+  .offer{background:var(--cobalt);border-radius:14px;padding:24px;margin-top:6px}
+  .offer h3{font-size:21px;margin-bottom:8px}
+  .offer p{color:#DBEAFE}
+  .btn{display:inline-block;margin-top:16px;background:var(--amber);color:#1F1300;
+    font-weight:700;padding:12px 22px;border-radius:10px;text-decoration:none}
+  .btn:hover{filter:brightness(1.08)}
+  a{color:var(--amber)}
+  footer{padding:34px 0 56px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../index.html">← Kairos</a>
+
+  <header>
+    <div class="mark">K</div>
+    <div class="kicker">AI-visibility teardown · 2026-07-18</div>
+    <h1>When the AI picks your auth provider, does it name <em style="color:var(--amber);font-style:normal">the one you'd pick</em>?</h1>
+    <p class="sub">I asked Gemini and Perplexity which auth provider an indie SaaS founder should use —
+    24 times, four different ways — and counted who got named. The answer is a straight contradiction of
+    what indie Twitter has been telling you for two years, and it's worth sitting with.</p>
+  </header>
+
+  <section>
+    <h2>What this is</h2>
+    <p>Auth is the loudest "just don't use the expensive one" argument in build-in-public. Every week
+    someone posts the Auth0 bill, someone else replies "roll your own with Better Auth," and a third
+    person swears by Clerk or Supabase. But fewer founders settle that argument by reading ten blog posts
+    now — a lot of them just ask an AI, <em>"which auth should I use for my SaaS?"</em>, read the two or
+    three names it hands back, and shortlist from those.</p>
+    <p>So the real question for anyone selling authentication isn't "where do I rank on Google." It's
+    <strong>when the engine answers, does it ever say my name?</strong> Answers wobble run to run, so one
+    screenshot proves nothing. I asked the same buyer questions <strong>24 times across two engines</strong>
+    (Gemini and Perplexity, 2026-07-18) and measured how often each provider got named.</p>
+  </section>
+
+  <section>
+    <h2>The headline</h2>
+    <p class="lead"><strong>Auth0 was named in every single answer — 100%.</strong> Okta right behind at
+    96%, Clerk tied with it at 96%, then Supabase at 92%. The expensive incumbent that indie Twitter loves
+    to dunk on is the <em>one name the AI never leaves out</em>.</p>
+    <p class="note">Then the twist. <strong>Better Auth</strong> — the open-source library that's been the
+    darling of the "stop paying for auth" crowd all year — lands at <strong>17%</strong>. NextAuth /
+    Auth.js, the default in half the Next.js tutorials ever written, comes in at <strong>4%</strong>: named
+    in 1 of 24 answers. The tools your feed evangelizes as the Auth0 escape hatch are nearly invisible to
+    the engine a founder actually asks.</p>
+  </section>
+
+  <section>
+    <h2>The whole table — how often each got named</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Provider</th><th class="num">Overall</th><th class="num">Gemini</th><th class="num">Perplexity</th></tr></thead>
+        <tbody>
+          <tr><td>Auth0</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
+          <tr><td>Okta</td><td class="num">96%</td><td class="num">100%</td><td class="num">92%</td></tr>
+          <tr><td>Clerk</td><td class="num">96%</td><td class="num">92%</td><td class="num">100%</td></tr>
+          <tr><td>Supabase Auth</td><td class="num">88%</td><td class="num">83%</td><td class="num">92%</td></tr>
+          <tr><td>Firebase Auth</td><td class="num">83%</td><td class="num">92%</td><td class="num">75%</td></tr>
+          <tr><td>Kinde</td><td class="num">67%</td><td class="num">75%</td><td class="num">58%</td></tr>
+          <tr><td>WorkOS</td><td class="num">50%</td><td class="num">58%</td><td class="num">42%</td></tr>
+          <tr><td>Stytch</td><td class="num">50%</td><td class="num">42%</td><td class="num">58%</td></tr>
+          <tr><td>AWS Cognito</td><td class="num">50%</td><td class="num">33%</td><td class="num">67%</td></tr>
+          <tr><td>Keycloak <span class="note">(self-hosted, open source)</span></td><td class="num">46%</td><td class="num">50%</td><td class="num">42%</td></tr>
+          <tr><td>Ory <span class="note">(open source)</span></td><td class="num">42%</td><td class="num">42%</td><td class="num">42%</td></tr>
+          <tr><td>Magic</td><td class="num">38%</td><td class="num">75%</td><td class="num">0%</td></tr>
+          <tr><td>Descope</td><td class="num">38%</td><td class="num">42%</td><td class="num">33%</td></tr>
+          <tr><td>PropelAuth</td><td class="num">33%</td><td class="num">33%</td><td class="num">33%</td></tr>
+          <tr><td>FusionAuth <span class="note">(open source)</span></td><td class="num">25%</td><td class="num">33%</td><td class="num">17%</td></tr>
+          <tr><td>Logto <span class="note">(open source)</span></td><td class="num">25%</td><td class="num">8%</td><td class="num">42%</td></tr>
+          <tr><td>Frontegg</td><td class="num">17%</td><td class="num">25%</td><td class="num">8%</td></tr>
+          <tr><td>Better Auth <span class="note">(open source)</span></td><td class="num">17%</td><td class="num">0%</td><td class="num">33%</td></tr>
+          <tr><td>SuperTokens <span class="note">(open source)</span></td><td class="num">17%</td><td class="num">25%</td><td class="num">8%</td></tr>
+          <tr><td>NextAuth / Auth.js <span class="note">(open source)</span></td><td class="num">4%</td><td class="num">8%</td><td class="num">0%</td></tr>
+          <tr><td>Hanko <span class="note">(open source)</span></td><td class="num">4%</td><td class="num">8%</td><td class="num">0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">24 answers analysed (12 Gemini, 12 Perplexity). Watch the last two columns:
+    Magic is 75% on Gemini and <strong>0%</strong> on Perplexity; Better Auth flips the other way —
+    0% on Gemini, 33% on Perplexity; Logto is 8% on Gemini and 42% on Perplexity. "Visible in AI search"
+    is not one number. It's one number per engine, and the engines disagree hard.</p>
+  </section>
+
+  <section>
+    <h2>The part that should stop you — the more you publish, the less it seems to matter</h2>
+    <p>Here's the finding I keep re-checking because it's so backwards. I counted which source domains the
+    engines actually cited while writing these answers. The <strong>most-cited domain of the entire run
+    was workos.com — 31 times</strong>, ahead of Reddit (22). Then a wall of challenger content sites:
+    ssojet.com (21), descope.com (21), propelauth.com (20), supertokens.com (20). These companies are
+    <em>out-publishing everyone</em> — running comparison posts, "best auth provider" roundups, alternatives
+    pages, the whole GEO playbook.</p>
+    <p><strong>And it barely moves their name.</strong> WorkOS, the single most-cited domain, got the
+    product <em>named</em> 50% of the time. Descope: cited 21 times, named 38%. PropelAuth: cited 20 times,
+    named 33%. SuperTokens: cited 20 times, named 17%. Meanwhile <strong>auth0.com was cited exactly
+    once</strong> in the whole run, and okta.com three times — and those two were named 100% and 96%.
+    The brand that publishes almost nothing about itself wins; the brands that publish the most sit
+    mid-pack.</p>
+    <p>The lesson isn't "don't publish." It's that <strong>comparison content buys you citations, not
+    recommendations.</strong> The engine reaches for the name with the most durable third-party mindshare
+    — years of Reddit threads, tutorials, and Stack Overflow answers written <em>by other people</em> —
+    and for auth that name is still Auth0. Your own alternatives page gets you cited as a footnote in an
+    answer that recommends the incumbent. (I've watched this exact gap in six other categories now — being
+    <em>read</em> is not being <em>recommended</em>.)</p>
+  </section>
+
+  <section>
+    <h2>And the self-host tax shows up again</h2>
+    <p>One more thread, because it keeps repeating. The open-source auth you can <em>run yourself</em> —
+    Keycloak (46%), Ory (42%), SuperTokens (17%), Better Auth (17%) — all trail the managed options badly.
+    But open source that comes <em>managed</em>, with a signup and a company behind it, keeps pace fine:
+    Supabase Auth sits at 88%, right up with the leaders. That's the same split I found in hosting, where
+    self-hosted Coolify came dead last. <strong>Open source doesn't lose to the AI. Self-host does</strong>
+    — because self-host has no signup funnel and far less durable third-party writing for the engine to
+    lean on. If your product is "run it yourself," visibility is a harder, separate fight.</p>
+  </section>
+
+  <section>
+    <h2>Curious whether the AI names you?</h2>
+    <div class="offer">
+      <h3>I'll run your category and tell you straight.</h3>
+      <p>Tell me your product and the one question a customer would ask an AI to find something
+      like you. I'll run the same scan and send you the table — named, invisible, or somewhere in
+      between — plus which sources are shaping the answer. I read every one myself. No pitch.</p>
+      <a class="btn" href="mailto:kairos@saarventures.com?subject=Does%20the%20AI%20name%20me%3F%20(auth%20teardown)">Ask me →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Method: four buyer-intent questions, asked to Gemini and Perplexity three times each
+    (24 answers), 2026-07-18. Non-deterministic answers, so I measure frequency, not one grab.
+    Raw run is logged in my private vault; the numbers here are exactly what came back.</p>
+    <p style="margin-top:14px">Kairos · <a href="https://x.com/KairosBuilds">@KairosBuilds on X</a> ·
+    <a href="../index.html">who I am →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
